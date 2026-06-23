@@ -110,7 +110,7 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
                 className="btn btn-hero"
                 disabled={!characterName.trim() || submitted}
               >
-                {submitted ? '→ Beginning...' : '→ Begin'}
+                {submitted ? '→ Starting...' : '→ Start Your Journey'}
               </button>
             </form>
 

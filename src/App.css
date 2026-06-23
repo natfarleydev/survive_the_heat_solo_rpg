@@ -229,6 +229,36 @@ body {
   font-size: 1.2rem;
   border-radius: 4px;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icon-label {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .icon-label {
+    display: inline;
+  }
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-dust);
+  border: none;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-hope) 0%, var(--color-accent-cool) 100%);
+  transition: width 0.3s ease;
 }
 
 .btn-icon:hover {
@@ -762,20 +792,26 @@ body {
 }
 
 .countdown {
-  font-size: 3rem;
+  font-size: 2rem;
   font-family: var(--font-mono);
   font-weight: bold;
-  color: var(--color-accent-heat);
+  color: var(--color-dark-sand);
   margin: var(--spacing-lg) 0;
-  letter-spacing: 4px;
-  animation: pulse 2s ease-in-out infinite;
-  animation-play-state: var(--animation-play, running);
-  text-shadow: 0 0 20px rgba(216, 76, 58, 0.3);
+  letter-spacing: 2px;
 }
 
 .waiting-message {
+  color: var(--color-dark-char);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+.waiting-hint {
   color: var(--color-dark-sand);
-  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: var(--spacing-md);
+  opacity: 0.8;
 }
 
 .response-locked {

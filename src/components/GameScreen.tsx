@@ -64,27 +64,31 @@ export default function GameScreen({
           <div className="character-info">
             <span className="character-name">{gameState.characterName}</span>
             <span className="day-counter">
-              Day {gameState.currentDay} / {gameState.responses.length + 1} received
+              Day {gameState.currentDay} of 12
             </span>
           </div>
         </div>
         <div className="header-actions">
-          <button className="btn-icon" onClick={() => setShowHistory(!showHistory)} title="View history">
-            📖
+          <button className="btn-icon" onClick={() => setShowHistory(!showHistory)} title="View history" aria-label="View your journey history">
+            <span className="icon-label">📖 History</span>
           </button>
-          <button className="btn-icon" onClick={handleExport} title="Export as markdown">
-            📥
+          <button className="btn-icon" onClick={handleExport} title="Export as markdown" aria-label="Download your story">
+            <span className="icon-label">📥 Export</span>
           </button>
           {!letterReady && (
-            <button className="btn-icon" onClick={handleSkipTime} title="Skip to next letter">
-              ⏩
+            <button className="btn-icon" onClick={handleSkipTime} title="Skip to next letter (for testing)" aria-label="Skip time to next letter">
+              <span className="icon-label">⏩ Skip</span>
             </button>
           )}
-          <button className="btn-icon" onClick={handleReset} title="Reset game">
-            ↻
+          <button className="btn-icon" onClick={handleReset} title="Reset game and start over" aria-label="Start a new game">
+            <span className="icon-label">↻ Reset</span>
           </button>
         </div>
       </header>
+
+      <div className="progress-bar">
+        <div className="progress-fill" style={{ width: `${(gameState.currentDay / 12) * 100}%` }}></div>
+      </div>
 
       <main className="game-main">
         <div className="game-content">
@@ -93,10 +97,12 @@ export default function GameScreen({
               <LetterDisplay letter={currentLetter} />
             ) : (
               <div className="waiting-state">
-                <h2>Next letter arriving in...</h2>
-                <div className="countdown">{formattedTime}</div>
+                <h2>Next letter in {formattedTime}</h2>
                 <p className="waiting-message">
-                  The settlement is preparing their next message. Check back soon.
+                  New Hope is preparing their response. <strong>It's safe to close this tab and come back later</strong>—your progress is saved automatically.
+                </p>
+                <p className="waiting-hint">
+                  💡 <em>Pro tip: Click the ⏩ button above to skip ahead for testing.</em>
                 </p>
               </div>
             )}
