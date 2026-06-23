@@ -1,5 +1,5 @@
 import type { GameState, Letter } from '../types';
-import { submitResponse, downloadMarkdownExport } from '../gameEngine';
+import { submitResponse, downloadMarkdownExport, skipTime } from '../gameEngine';
 import LetterDisplay from './LetterDisplay';
 import ResponseForm from './ResponseForm';
 import StatsPanel from './StatsPanel';
@@ -30,12 +30,17 @@ export default function GameScreen({
     onGameStateChange(newState);
   };
 
+  const handleSkipTime = () => {
+    const newState = skipTime(gameState);
+    onGameStateChange(newState);
+  };
+
   const handleExport = () => {
     downloadMarkdownExport(gameState);
   };
 
   const handleReset = () => {
-    if (window.confirm('Are you sure? This will erase your progress.')) {
+    if (window.confirm('Are you sure? This will erase your progress and start a new game.')) {
       onReset();
     }
   };
@@ -70,8 +75,13 @@ export default function GameScreen({
           <button className="btn-icon" onClick={handleExport} title="Export as markdown">
             📥
           </button>
-          <button className="btn-icon danger" onClick={handleReset} title="Reset game">
-            ⟲
+          {!letterReady && (
+            <button className="btn-icon" onClick={handleSkipTime} title="Skip to next letter">
+              ⏩
+            </button>
+          )}
+          <button className="btn-icon" onClick={handleReset} title="Reset game">
+            ↻
           </button>
         </div>
       </header>

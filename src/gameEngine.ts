@@ -17,7 +17,7 @@ const createInitialState = (characterName: string): GameState => ({
     alliesGained: 0,
   },
   lastLetterTime: Date.now(),
-  nextLetterTime: Date.now() + LETTER_DELAY_MS,
+  nextLetterTime: Date.now(), // First letter available immediately
   gameStarted: true,
   gameCompleted: false,
 });
@@ -179,6 +179,12 @@ export const downloadMarkdownExport = (state: GameState): void => {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+};
+
+export const skipTime = (state: GameState): GameState => {
+  const newState = { ...state, nextLetterTime: Date.now() };
+  saveGameState(newState);
+  return newState;
 };
 
 export const resetGame = (): void => {
