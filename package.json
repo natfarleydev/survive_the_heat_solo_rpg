@@ -2,7 +2,7 @@
   "name": "survive_the_heat_solo_rpg",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://nasfarley88.github.io/survive_the_heat_solo_rpg/",
+  "homepage": "https://natfarleydev.github.io/survive_the_heat_solo_rpg/",
   "type": "module",
   "scripts": {
     "dev": "vite",
