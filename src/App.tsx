@@ -13,6 +13,7 @@ import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import CompletionScreen from './components/CompletionScreen';
 import AnimationToggle from './components/AnimationToggle';
+import BuildIndicator from './components/BuildIndicator';
 import './App.css';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
     return (
       <>
         <AnimationToggle />
+        <BuildIndicator />
         <div className="container">
           <div className="loading">Loading...</div>
         </div>
@@ -66,6 +68,7 @@ function App() {
     return (
       <>
         <AnimationToggle />
+        <BuildIndicator />
         <StartScreen onStartGame={handleStartGame} />
       </>
     );
@@ -75,6 +78,7 @@ function App() {
     return (
       <>
         <AnimationToggle />
+        <BuildIndicator />
         <CompletionScreen gameState={gameState} onReset={handleReset} />
       </>
     );
@@ -86,6 +90,7 @@ function App() {
   return (
     <>
       <AnimationToggle />
+      <BuildIndicator />
       <GameScreen
         gameState={gameState}
         currentLetter={currentLetter}

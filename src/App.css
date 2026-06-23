@@ -1595,3 +1595,26 @@ button[type="submit"]:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* BUILD INDICATOR */
+.build-indicator {
+  position: fixed;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  font-size: 0.75rem;
+  color: var(--color-dark-sand);
+  background: rgba(212, 196, 176, 0.7);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(154, 134, 112, 0.3);
+  cursor: help;
+  transition: all 0.2s;
+  z-index: 999;
+}
+
+.build-indicator:hover {
+  background: rgba(212, 196, 176, 0.9);
+  color: var(--color-dark-char);
+  border-color: rgba(154, 134, 112, 0.6);
+}
