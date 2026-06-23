@@ -27,15 +27,15 @@ export default function ResponseForm({ dayNumber, onSubmit, lastResponse }: Resp
     <div className="response-form">
       <h3 className="form-title">Your Response - Day {dayNumber}</h3>
 
-      {lastResponse && (
-        <div className="reflection-prompts">
-          <p className="prompts-label">Reflection prompts for today:</p>
+      {lastResponse && lastResponse.generatedPrompts.length > 0 && (
+        <details className="reflection-prompts">
+          <summary>💭 Reflection prompts (optional)</summary>
           <ul>
             {lastResponse.generatedPrompts.slice(0, 2).map((prompt, idx) => (
               <li key={idx}>{prompt}</li>
             ))}
           </ul>
-        </div>
+        </details>
       )}
 
       <form onSubmit={handleSubmit}>
