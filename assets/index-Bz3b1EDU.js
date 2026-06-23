@@ -50,7 +50,7 @@ Koss`},{day:4,from:`Iris, Settlement Comms Officer`,subject:`Heat Spike Coming -
 
 We're tracking a thermal depression pattern moving in from the north. The models from our old weather AI (still running, believe it or not) suggest temperatures could hit 72°C within 36 hours.
 
-That's beyond the survival zone for most people. We had one other person working remote like you during the last spike. He stopped responding after day one. We found him three days later beyond the veil. There's little room for recovery from that threshold.
+That's beyond the survival zone for most people. We had one other person working remote like you during the last spike. He stopped responding after day one. We found him three days later. He didn't make it. There's little room for recovery from that threshold.
 
 I'm not trying to scare you. I'm trying to prepare you.
 
@@ -58,7 +58,7 @@ Here's what we know keeps people alive in those conditions: absolute water disci
 
 How are you planning to survive the next 72 hours? What's your strategy? What are you scared of?
 
-We need to know. The data matters. If the heat takes you beyond the veil, we'll learn from what you tried.
+We need to know. The data matters. If you don't make it, we'll learn from what you tried.
 
 Iris`},{day:5,from:`Mara, Psychologist & Settlement Council`,subject:`Psychological Resilience in Isolation`,body:`[NAME],
 
@@ -68,7 +68,7 @@ But you're out there genuinely alone. That does something different to the mind.
 
 I'm reaching out because after four days of contact, we want to make sure your isolation isn't becoming pathological. Are you sleeping? Are you tracking time normally, or are the days blurring? Do you still remember why you're fighting to survive, or has it become automatic?
 
-People surprise me. Some get stronger in isolation. Most get stranger. A few fade beyond the veil. I've been reading your reports through Iris's data summaries. You seem grounded. But I'm asking you to tell me directly: how are you holding up mentally?
+People surprise me. Some get stronger in isolation. Most get stranger. A few don't make it out. I've been reading your reports through Iris's data summaries. You seem grounded. But I'm asking you to tell me directly: how are you holding up mentally?
 
 The heat affects more than just the body.
 
@@ -116,7 +116,7 @@ We've been tracking something in your responses. A shift around day seven. A dee
 
 Either way, I want to ask: do you feel like this matters? Like your survival is connected to something larger than just staying alive another day?
 
-This is important because loss of purpose is what pulls people beyond the veil. Not heat, not dehydration—loss of purpose. People can survive almost anything if they believe it's for something. They fade when they're just enduring.
+This is important because loss of purpose is what takes people. Not heat, not dehydration—loss of purpose. People can survive almost anything if they believe it's for something. They fade when they're just enduring.
 
 You're being asked to take risks. For the cache, for our data, for the settlement. Before you do that, I need you to think about why. What does New Hope mean to you? Why is a stranger named Iris on a network asking you to help?
 
