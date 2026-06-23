@@ -133,14 +133,26 @@ test.describe('Survive the Heat - Game Logic', () => {
       await expect(page.locator('text=Next letter in')).toBeVisible({ timeout: 5000 });
     });
 
-    test('should show character count', async ({ page }) => {
+    test('should show transmission telemetry (char count + limit)', async ({ page }) => {
       const textarea = page.locator('textarea');
       const testText = 'Testing the character counter';
 
       await textarea.fill(testText);
 
-      // Character count should show
-      await expect(page.locator(`text=${testText.length} characters`)).toBeVisible();
+      // Bandwidth readout shows used / capped characters
+      await expect(page.locator('.tx-chars')).toContainText(`${testText.length}`);
+      await expect(page.locator('.tx-chars')).toContainText('1,500');
+      // Payload / compression telemetry is present
+      await expect(page.locator('.tx-stats')).toContainText('PAYLOAD');
+      await expect(page.locator('.tx-stats')).toContainText('COMPRESSED');
+    });
+
+    test('should cap the report at the transmission limit', async ({ page }) => {
+      const textarea = page.locator('textarea');
+      // Try to type well past the 1500-char cap
+      await textarea.fill('A'.repeat(2000));
+      const value = await textarea.inputValue();
+      expect(value.length).toBe(1500);
     });
 
     test('should save response to history', async ({ page }) => {
@@ -217,9 +229,8 @@ test.describe('Survive the Heat - Game Logic', () => {
 
       // Check morale stat
       await expect(page.locator('text=Settlement Morale')).toBeVisible();
-      // Initial morale should be around 50%
-      const moraleValue = page.locator('span:has-text("50")');
-      await expect(moraleValue).toBeVisible();
+      // Initial morale should be 50%
+      await expect(page.locator('.morale-value')).toContainText('50');
     });
 
     test('should increase morale with hopeful response', async ({ page }) => {

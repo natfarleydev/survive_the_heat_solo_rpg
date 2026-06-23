@@ -1015,6 +1015,102 @@ body {
   box-shadow: inset 0 0 0 2px rgba(184, 166, 87, 0.3);
 }
 
+/* TRANSMISSION TELEMETRY — sells the scarce-bandwidth uplink */
+.transmission-telemetry {
+  background: var(--color-dark-char);
+  color: #cdbfa6;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  padding: 0.55rem var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border-top: 1px solid rgba(205, 191, 166, 0.15);
+}
+
+.tx-bandwidth {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tx-label {
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+.tx-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(205, 191, 166, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tx-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--color-accent-cool);
+  border-radius: 3px;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.tx-bar-fill[data-state='warn'] {
+  background: var(--color-accent-hope);
+}
+
+.tx-bar-fill[data-state='full'] {
+  background: var(--color-accent-heat);
+}
+
+.tx-chars {
+  white-space: nowrap;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+.tx-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  opacity: 0.8;
+}
+
+.tx-stats em {
+  font-style: normal;
+  color: var(--color-accent-cool);
+}
+
+.tx-sep {
+  opacity: 0.35;
+}
+
+/* Status line in the form footer */
+.tx-status {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+}
+
+.tx-status-idle {
+  color: var(--color-dark-sand);
+  opacity: 0.7;
+}
+
+.tx-status-ok {
+  color: var(--color-accent-cool);
+}
+
+.tx-status-warn {
+  color: #b07d1f;
+}
+
+.tx-status-full {
+  color: var(--color-accent-heat);
+  font-weight: bold;
+}
+
 /* Stats Panel */
 .stats-panel {
   display: flex;

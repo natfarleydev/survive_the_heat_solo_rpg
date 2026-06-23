@@ -125,14 +125,16 @@ test.describe('Mobile - Game Experience', () => {
       expect(value).toBe(testText);
     });
 
-    test('should display character count clearly on mobile', async ({ page }) => {
+    test('should display transmission telemetry clearly on mobile', async ({ page }) => {
       const textarea = page.locator('textarea');
       const testText = 'Test message';
 
       await textarea.fill(testText);
 
-      // Character count should be visible
-      await expect(page.locator(`text=${testText.length} characters`)).toBeVisible();
+      // Bandwidth char readout should be visible with the used count
+      const chars = page.locator('.tx-chars');
+      await expect(chars).toBeVisible();
+      await expect(chars).toContainText(`${testText.length}`);
     });
 
     test('should have responsive submit button', async ({ page }) => {
