@@ -5,11 +5,22 @@ import type { Page } from '@playwright/test';
  * for the character-name input to be ready.
  */
 export async function dismissSplash(page: Page) {
+  const input = page.locator('input[placeholder="Your name..."]');
+
+  // If the input is already showing (returning user, or input phase), we're done.
+  if (await input.isVisible().catch(() => false)) return;
+
+  // Otherwise wait for the splash to actually mount, then click to skip it.
+  // (Checking isVisible() at a single instant races the React mount and can
+  // leave us waiting out the full 18s auto-advance — too slow on webkit.)
   const splash = page.locator('.splash-screen');
-  if (await splash.isVisible().catch(() => false)) {
+  try {
+    await splash.waitFor({ state: 'visible', timeout: 3000 });
     await splash.click();
+  } catch {
+    // No splash appeared — fall through and wait for the input directly.
   }
-  await page.locator('input[placeholder="Your name..."]').waitFor({ state: 'visible' });
+  await input.waitFor({ state: 'visible', timeout: 20000 });
 }
 
 /**

@@ -10,6 +10,10 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
+    // Trigger the app's prefers-reduced-motion CSS so animations don't leave
+    // elements "unstable" mid-transition (which made clicks time out on webkit
+    // under parallel load). Also makes the suite faster and more deterministic.
+    reducedMotion: 'reduce',
   },
 
   projects: [

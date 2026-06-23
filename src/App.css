@@ -1496,6 +1496,9 @@ body {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
+    /* Scroll the whole page on mobile instead of an inner overflow region —
+       avoids unreachable controls below the fold on small screens. */
+    overflow: visible;
   }
 
   .game-sidebar {
