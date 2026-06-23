@@ -75,11 +75,6 @@ body.no-animations {
   100% { opacity: 0; transform: translateY(100px) translateX(20px); }
 }
 
-@keyframes heatWave {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.02); opacity: 0.98; }
-}
-
 /* Conditional animation application */
 .animate-in {
   animation: fadeIn 0.8s ease-out;
@@ -134,9 +129,6 @@ body {
 
 .start-container {
   background: linear-gradient(135deg, #d4c4b0 0%, #c8b39a 50%, #d4c4b0 100%);
-  background-size: 400% 400%;
-  animation: heatWave 6s ease-in-out infinite;
-  animation-play-state: var(--animation-play, running);
 }
 
 .game-container {
@@ -448,20 +440,6 @@ body {
     rgba(184, 166, 87, 0.05) 50%,
     transparent 100%
   );
-  animation: shimmer 4s linear infinite;
-  animation-play-state: var(--animation-play, running);
-}
-
-.heat-shimmer-1 {
-  animation-delay: 0s;
-}
-
-.heat-shimmer-2 {
-  animation-delay: 1.3s;
-}
-
-.heat-shimmer-3 {
-  animation-delay: 2.6s;
 }
 
 .start-content {
