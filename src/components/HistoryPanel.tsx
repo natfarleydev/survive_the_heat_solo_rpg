@@ -18,7 +18,7 @@ export default function HistoryPanel({ responses, onClose }: HistoryPanelProps) 
 
         <div className="history-list">
           {responses.map((response) => (
-            <details key={response.day} className="history-item">
+            <details key={response.day} className="history-item" open>
               <summary className="history-summary">
                 <span className="history-day">Day {response.day}</span>
                 <span className="history-subject">{response.letter.subject}</span>

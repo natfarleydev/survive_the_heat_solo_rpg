@@ -83,6 +83,84 @@ const categoryPrompts: Record<KeywordCategory, string[]> = {
   ],
 };
 
+/**
+ * Curated, evocative story-seeds for each day — the heart of the solo-RPG
+ * experience. Unlike the reactive prompts below (which respond to what the
+ * player already wrote), these are always shown so every day opens with
+ * concrete, sensory angles to write into. Each set is tuned to the theme of
+ * that day's letter. Second person, present tense, specific.
+ */
+const dailyPrompts: Record<number, string[]> = {
+  1: [
+    'Describe where you sheltered last night. What does it look, smell, and sound like at the hottest hour?',
+    "What single object have you carried this far — and why can't you leave it behind?",
+    'It is noon and the air shimmers. Walk us through the last hour, moment by moment.',
+  ],
+  2: [
+    'Take stock of your body. Where does the heat live in you right now?',
+    'When did you last drink? Describe the water — its taste, its warmth, how much is left.',
+    'Look at your hands. What has the sun done to your skin this week?',
+  ],
+  3: [
+    'Describe the land around you — the ruins, roads, or wreckage you can see from where you stand.',
+    'Have you found anything useful out here? Tell us what, and what it cost you to reach it.',
+    "Koss wants you to trust him about the cache. What does the word 'trust' mean to you now?",
+  ],
+  4: [
+    'The worst heat is coming. Lay out your plan, step by step, as if teaching someone who has never survived a spike.',
+    'What are you most afraid will go wrong in the next three days?',
+    'Where will you be when the temperature peaks? Paint us the picture of that hiding place.',
+  ],
+  5: [
+    "When did you last hear a voice that wasn't your own? What has the silence started to sound like?",
+    'Describe a moment today when your mind played a trick on you — a sound, a shape, a face.',
+    'If you let yourself feel one thing right now, what would it be?',
+  ],
+  6: [
+    'Describe something you built, fixed, or rigged to survive. How does it work?',
+    'What ordinary object have you turned into a tool the old world never intended?',
+    'Sato speaks your language — desperate engineering. Teach us your best trick.',
+  ],
+  7: [
+    'The spike has passed and you are still here. How? Walk us through the worst hour of it.',
+    'What did this heat wave take from you — and what did it leave behind?',
+    'You survived something that takes most people. Sit with that a moment. What does it feel like?',
+  ],
+  8: [
+    'You are being asked to cross the killing heat for the cache. Describe the moment you decide.',
+    'What would it mean to save fifty strangers you have never met?',
+    'Describe the way out — the distance, the glare, the thing that almost stopped you.',
+  ],
+  9: [
+    'Why are you still answering these messages? Be honest with us.',
+    "What does 'New Hope' mean to you now — a place, a people, or a promise?",
+    'If you reach the settlement, who do you want to become there?',
+  ],
+  10: [
+    'Describe how you rest. What does your body need that you cannot give it yet?',
+    'Ten days of heat have changed you. What is different about the person writing this?',
+    'What stops you from simply lying down and giving in?',
+  ],
+  11: [
+    'This may be your last message before the worst of it. What do you need to say while you still can?',
+    "Let yourself imagine it: what would 'home' feel like after all this?",
+    'Tomorrow is the peak. What are you carrying into it — supplies, fears, hopes?',
+  ],
+  12: [
+    'You made it. Describe the moment the settlement first comes into view.',
+    'Look back across these twelve days. What is the one thing you will never forget?',
+    'Who were you when this began — and who are you now?',
+  ],
+};
+
+export const getDailyPrompts = (day: number): string[] => {
+  return dailyPrompts[day] ?? [
+    'How did you survive the heat today? Be specific — what you did, what you felt, what nearly broke you.',
+    'What kept you human out there?',
+    'What do you most want New Hope to know?',
+  ];
+};
+
 export const detectKeywords = (text: string): KeywordCategory[] => {
   const lowerText = text.toLowerCase();
   const detected: KeywordCategory[] = [];

@@ -1,10 +1,10 @@
-import { test, expect, devices } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { gotoFresh } from './helpers';
 
 // Mobile-specific tests - run on Pixel 5 (Android) and iPhone 12
 test.describe('Mobile - Game Experience', () => {
   test.beforeEach(async ({ page }) => {
-    await page.evaluate(() => localStorage.clear());
-    await page.goto('/');
+    await gotoFresh(page);
   });
 
   test.describe('Start Screen - Mobile', () => {
@@ -14,7 +14,7 @@ test.describe('Mobile - Game Experience', () => {
       // Check that main elements are visible
       const title = page.locator('h1');
       const input = page.locator('input[placeholder="Your name..."]');
-      const button = page.locator('button:has-text("Begin")');
+      const button = page.locator('button:has-text("Start Your Journey")');
 
       await expect(title).toBeVisible();
       await expect(input).toBeVisible();
@@ -64,7 +64,7 @@ test.describe('Mobile - Game Experience', () => {
     test.beforeEach(async ({ page }) => {
       // Start game
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Mobile');
       await beginButton.click();
       await page.waitForTimeout(500);
@@ -136,7 +136,7 @@ test.describe('Mobile - Game Experience', () => {
     });
 
     test('should have responsive submit button', async ({ page }) => {
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       const box = await submitButton.boundingBox();
 
       // Button should be reasonably sized
@@ -147,7 +147,7 @@ test.describe('Mobile - Game Experience', () => {
   test.describe('Mobile - Touch Interactions', () => {
     test.beforeEach(async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Mobile');
       await beginButton.click();
       await page.waitForTimeout(500);
@@ -155,7 +155,7 @@ test.describe('Mobile - Game Experience', () => {
 
     test('should be clickable with touch on mobile', async ({ page }) => {
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
 
       // Type a response
       await textarea.fill('Testing mobile touch interaction');
@@ -170,7 +170,7 @@ test.describe('Mobile - Game Experience', () => {
     test('should handle history panel on mobile', async ({ page }) => {
       // Submit a response first
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await textarea.fill('Mobile history test');
       await submitButton.click();
 
@@ -184,35 +184,22 @@ test.describe('Mobile - Game Experience', () => {
       await expect(page.locator('text=Mobile history test')).toBeVisible();
     });
 
-    test('should allow collapse/expand of prompts on mobile', async ({ page }) => {
-      // Submit first response so prompts appear
+    test('should show tappable story-seed prompts on mobile', async ({ page }) => {
+      // Story-seed prompts should be visible immediately on day 1
+      const seeds = page.locator('.prompt-seed');
+      await expect(seeds.first()).toBeVisible();
+
+      // There should be multiple prompts (3 per day)
+      const count = await seeds.count();
+      expect(count).toBeGreaterThanOrEqual(3);
+
+      // Tapping a seed should populate the textarea
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
-      await textarea.fill('First response');
-      await submitButton.click();
+      const seedText = (await seeds.first().textContent())?.trim() ?? '';
+      await seeds.first().click();
 
-      // Skip to next letter
-      const skipButton = page.locator('button[title*="Skip"]');
-      if (await skipButton.isVisible()) {
-        await skipButton.click();
-        await page.waitForTimeout(500);
-      }
-
-      // Prompts details should be collapsible
-      const promptsDetails = page.locator('details.reflection-prompts');
-      if (await promptsDetails.isVisible()) {
-        // Should be collapsed initially
-        const isOpen = await promptsDetails.evaluate(el => el.hasAttribute('open'));
-        expect(isOpen).toBe(false);
-
-        // Click to expand
-        const summary = promptsDetails.locator('summary');
-        await summary.click();
-
-        // Should now be open
-        const isNowOpen = await promptsDetails.evaluate(el => el.hasAttribute('open'));
-        expect(isNowOpen).toBe(true);
-      }
+      const value = await textarea.inputValue();
+      expect(value).toContain(seedText.slice(0, 20));
     });
   });
 
@@ -251,14 +238,11 @@ test.describe('Mobile - Game Experience', () => {
       await expect(title).toBeVisible();
     });
 
-    test('should be readable even on small phones', async ({ browser, context }) => {
+    test('should be readable even on small phones', async ({ browser }) => {
       // Test on very small mobile (iPhone SE - 375px width)
-      const page = await context.newPage({
-        viewport: { width: 375, height: 667 },
-      });
-
-      await page.evaluate(() => localStorage.clear());
-      await page.goto('/');
+      const context = await browser.newContext({ viewport: { width: 375, height: 667 } });
+      const page = await context.newPage();
+      await gotoFresh(page);
 
       const title = page.locator('h1');
       const input = page.locator('input[placeholder="Your name..."]');
@@ -271,7 +255,7 @@ test.describe('Mobile - Game Experience', () => {
       const fontSize = await title.evaluate(el => window.getComputedStyle(el).fontSize);
       expect(parseInt(fontSize)).toBeGreaterThanOrEqual(16);
 
-      await page.close();
+      await context.close();
     });
   });
 });

@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { gotoFresh, dismissSplash } from './helpers';
 
 test.describe('Survive the Heat - Game Logic', () => {
   test.beforeEach(async ({ page }) => {
-    // Clear localStorage before each test
-    await page.evaluate(() => localStorage.clear());
-    await page.goto('/');
+    // Fresh slate + skip the intro splash so the input is interactable.
+    await gotoFresh(page);
   });
 
   test.describe('Start Screen', () => {
@@ -14,13 +14,13 @@ test.describe('Survive the Heat - Game Logic', () => {
     });
 
     test('should have disabled begin button initially', async ({ page }) => {
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await expect(beginButton).toBeDisabled();
     });
 
     test('should enable begin button when character name is entered', async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
 
       await input.fill('Alex');
       await expect(beginButton).toBeEnabled();
@@ -38,7 +38,7 @@ test.describe('Survive the Heat - Game Logic', () => {
 
     test('should start game when begin button is clicked', async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
 
       await input.fill('Alex');
       await beginButton.click();
@@ -52,7 +52,7 @@ test.describe('Survive the Heat - Game Logic', () => {
     test.beforeEach(async ({ page }) => {
       // Start a game
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
@@ -75,6 +75,24 @@ test.describe('Survive the Heat - Game Logic', () => {
       await expect(textarea).toBeEnabled();
     });
 
+    test('should show story-seed prompts immediately on day 1', async ({ page }) => {
+      // Solo-RPG hook: evocative prompts must appear on the very first turn
+      const seeds = page.locator('.prompt-seed');
+      await expect(seeds.first()).toBeVisible();
+      expect(await seeds.count()).toBeGreaterThanOrEqual(3);
+    });
+
+    test('should populate textarea when a story-seed is tapped', async ({ page }) => {
+      const seeds = page.locator('.prompt-seed');
+      const textarea = page.locator('textarea');
+
+      const seedText = (await seeds.first().textContent())?.trim() ?? '';
+      await seeds.first().click();
+
+      const value = await textarea.inputValue();
+      expect(value).toContain(seedText.slice(0, 20));
+    });
+
     test('should accept character name in letter body', async ({ page }) => {
       // Letter should be personalized with character name
       const letterBody = page.locator('.letter-body');
@@ -85,20 +103,20 @@ test.describe('Survive the Heat - Game Logic', () => {
   test.describe('Response Submission', () => {
     test.beforeEach(async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
       await page.waitForTimeout(500);
     });
 
     test('should require text to submit response', async ({ page }) => {
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await expect(submitButton).toBeDisabled();
     });
 
     test('should enable submit button when text is entered', async ({ page }) => {
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
 
       await textarea.fill('I survived by staying in the shade.');
       await expect(submitButton).toBeEnabled();
@@ -106,7 +124,7 @@ test.describe('Survive the Heat - Game Logic', () => {
 
     test('should submit response and advance to waiting state', async ({ page }) => {
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
 
       await textarea.fill('I stayed hydrated and avoided the peak heat hours.');
       await submitButton.click();
@@ -127,7 +145,7 @@ test.describe('Survive the Heat - Game Logic', () => {
 
     test('should save response to history', async ({ page }) => {
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       const testResponse = 'I found an old well and drank deeply.';
 
       await textarea.fill(testResponse);
@@ -149,13 +167,13 @@ test.describe('Survive the Heat - Game Logic', () => {
     test('should persist game state to localStorage', async ({ page }) => {
       // Start game
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
       // Submit response
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await textarea.fill('I drank water and stayed cool.');
       await submitButton.click();
 
@@ -172,12 +190,12 @@ test.describe('Survive the Heat - Game Logic', () => {
     test('should reload game state from localStorage', async ({ page }) => {
       // Start and submit in first session
       let input = page.locator('input[placeholder="Your name..."]');
-      let beginButton = page.locator('button:has-text("Begin")');
+      let beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await textarea.fill('I survived the heat.');
       await submitButton.click();
 
@@ -193,7 +211,7 @@ test.describe('Survive the Heat - Game Logic', () => {
   test.describe('Stats Tracking', () => {
     test('should initialize morale at 50%', async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
@@ -206,7 +224,7 @@ test.describe('Survive the Heat - Game Logic', () => {
 
     test('should increase morale with hopeful response', async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
@@ -218,7 +236,7 @@ test.describe('Survive the Heat - Game Logic', () => {
 
       // Submit hopeful response
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       const hopefulText = 'I hope to survive this. I believe we can make it together!';
       await textarea.fill(hopefulText);
       await submitButton.click();
@@ -238,20 +256,20 @@ test.describe('Survive the Heat - Game Logic', () => {
   test.describe('Progress Through Game', () => {
     test('should progress through multiple days', async ({ page }) => {
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
       // Submit responses for days 1-3
       for (let day = 1; day <= 3; day++) {
         const textarea = page.locator('textarea');
-        const submitButton = page.locator('button:has-text("Send Response")');
+        const submitButton = page.locator('button:has-text("Send Report")');
 
         // Skip if waiting state
         const waitingState = page.locator('text=Next letter in');
         if (await waitingState.isVisible()) {
           // Use skip button to advance
-          const skipButton = page.locator('button[title="Skip to next letter"]');
+          const skipButton = page.locator('button[title*="Skip"]');
           if (await skipButton.isVisible()) {
             await skipButton.click();
             await page.waitForTimeout(500);
@@ -276,26 +294,25 @@ test.describe('Survive the Heat - Game Logic', () => {
     test('should reset game state', async ({ page }) => {
       // Start game and submit response
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await textarea.fill('I survived.');
       await submitButton.click();
 
-      // Click reset button
-      const resetButton = page.locator('button[title="Reset game"]');
+      // Register the confirmation-dialog handler BEFORE triggering it.
+      page.once('dialog', (dialog) => dialog.accept());
+
+      // Click reset button (title is "Reset game and start over")
+      const resetButton = page.locator('button[title*="Reset"]');
       await resetButton.click();
 
-      // Accept confirmation dialog
-      page.on('dialog', dialog => {
-        dialog.accept();
-      });
-
-      // Should be back at start screen
-      await expect(page.locator('input[placeholder="Your name..."]')).toBeVisible({ timeout: 5000 });
+      // Should be back at the start screen (splash reappears — dismiss it)
+      await dismissSplash(page);
+      await expect(page.locator('input[placeholder="Your name..."]')).toBeVisible();
 
       // localStorage should be cleared
       const gameState = await page.evaluate(() =>
@@ -309,12 +326,12 @@ test.describe('Survive the Heat - Game Logic', () => {
     test('should export game as markdown', async ({ page, context }) => {
       // Start game and submit response
       const input = page.locator('input[placeholder="Your name..."]');
-      const beginButton = page.locator('button:has-text("Begin")');
+      const beginButton = page.locator('button:has-text("Start Your Journey")');
       await input.fill('Alex');
       await beginButton.click();
 
       const textarea = page.locator('textarea');
-      const submitButton = page.locator('button:has-text("Send Response")');
+      const submitButton = page.locator('button:has-text("Send Report")');
       await textarea.fill('I survived by staying cool.');
       await submitButton.click();
 

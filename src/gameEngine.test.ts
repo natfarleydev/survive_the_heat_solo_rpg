@@ -118,8 +118,14 @@ describe('Game Engine', () => {
       expect(isLetterReady(state)).toBe(true);
     });
 
-    it('returns false when letter is not yet ready', () => {
+    it('returns true on a fresh game (first letter is available immediately)', () => {
       const state = initializeGame('TestChar');
+      expect(isLetterReady(state)).toBe(true);
+    });
+
+    it('returns false when the next letter time is still in the future', () => {
+      const state = initializeGame('TestChar');
+      state.nextLetterTime = Date.now() + 60_000;
       expect(isLetterReady(state)).toBe(false);
     });
   });
@@ -127,6 +133,7 @@ describe('Game Engine', () => {
   describe('getTimeUntilNextLetter', () => {
     it('returns positive time when letter is not ready', () => {
       const state = initializeGame('TestChar');
+      state.nextLetterTime = Date.now() + 60_000;
       const time = getTimeUntilNextLetter(state);
       expect(time).toBeGreaterThan(0);
     });

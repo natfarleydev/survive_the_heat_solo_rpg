@@ -8,6 +8,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
+    // Unit/component tests live in src/. Playwright e2e specs live in tests/
+    // and must not be picked up by Vitest.
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules/', 'dist/', 'tests/'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

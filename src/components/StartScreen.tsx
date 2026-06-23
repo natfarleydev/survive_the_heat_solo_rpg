@@ -45,7 +45,16 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
     <div className="container start-container">
       {/* SPLASH SCREEN */}
       {phase === 'splash' && (
-        <div className="splash-screen">
+        <div
+          className="splash-screen"
+          onClick={() => setPhase('input')}
+          role="button"
+          tabIndex={0}
+          aria-label="Skip intro"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') setPhase('input');
+          }}
+        >
           <div className="start-background">
             <div className="heat-shimmer heat-shimmer-1"></div>
             <div className="heat-shimmer heat-shimmer-2"></div>
@@ -73,6 +82,7 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
             </p>
           </div>
           <div className="splash-progress"></div>
+          <p className="splash-skip">Tap anywhere to continue &rarr;</p>
         </div>
       )}
 

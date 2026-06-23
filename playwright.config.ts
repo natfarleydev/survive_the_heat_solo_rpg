@@ -14,10 +14,15 @@ export default defineConfig({
 
   projects: [
     {
+      // Desktop runs the general game-logic suite. Mobile-only layout
+      // assertions (touch targets, hidden labels, single-column) would fail at
+      // desktop width, so they're excluded here.
       name: 'chromium-desktop',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /mobile\.spec\.ts/,
     },
     {
+      // Mobile projects run everything: game logic + mobile-specific layout.
       name: 'chromium-mobile',
       use: { ...devices['Pixel 5'] },
     },

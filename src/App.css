@@ -321,7 +321,22 @@ body {
   align-items: center;
   justify-content: center;
   padding: var(--spacing-lg);
+  cursor: pointer;
   animation: fadeIn 2s ease-out, fadeOut 2s ease-in 16s forwards;
+  animation-play-state: var(--animation-play, running);
+}
+
+.splash-skip {
+  position: absolute;
+  bottom: calc(var(--spacing-lg) + 12px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--color-dark-sand);
+  opacity: 0.6;
+  animation: fadeIn 1s ease-out 2s both;
   animation-play-state: var(--animation-play, running);
 }
 
@@ -627,6 +642,8 @@ body {
 }
 
 .textarea {
+  width: 100%;
+  box-sizing: border-box;
   padding: var(--spacing-md);
   border: 2px solid var(--color-border);
   border-radius: 6px;
@@ -943,6 +960,145 @@ body {
   font-size: 0.85rem;
   color: var(--color-dark-sand);
   font-style: italic;
+}
+
+/* STORY SEEDS — evocative prompts that open every day */
+.prompt-seeds {
+  background: linear-gradient(135deg, var(--color-dust-light) 0%, #efe6d6 100%);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent-hope);
+  border-radius: 6px;
+  padding: var(--spacing-lg);
+}
+
+.prompt-seeds-label {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-dark-char);
+  letter-spacing: 0.3px;
+}
+
+.prompt-seeds-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.prompt-seed {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: var(--spacing-md);
+  font-family: var(--font-family);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--color-dark-sand);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  padding-left: 2.2rem;
+}
+
+.prompt-seed::before {
+  content: '✎';
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-accent-hope);
+  font-size: 1rem;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.prompt-seed:hover {
+  background: white;
+  border-color: var(--color-accent-hope);
+  color: var(--color-dark-char);
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(184, 166, 87, 0.15);
+}
+
+.prompt-seed:hover::before {
+  opacity: 1;
+}
+
+.prompt-seed:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.prompt-seeds-hint {
+  margin: var(--spacing-md) 0 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-dark-sand);
+  opacity: 0.85;
+}
+
+/* TRANSMISSION — the immersive report textbox */
+.transmission-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.transmission {
+  border: 2px solid var(--color-dust-dark);
+  border-radius: 6px;
+  overflow: hidden;
+  background: white;
+  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.transmission-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem var(--spacing-md);
+  background: var(--color-dark-char);
+  color: #e8dcc8;
+}
+
+.transmission-rec {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-accent-heat);
+  box-shadow: 0 0 6px rgba(216, 76, 58, 0.8);
+  animation: recBlink 1.6s ease-in-out infinite;
+  animation-play-state: var(--animation-play, running);
+  flex-shrink: 0;
+}
+
+@keyframes recBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.transmission-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+}
+
+.transmission-input {
+  border: none;
+  border-radius: 0;
+  min-height: 200px;
+  background: linear-gradient(135deg, #fffefb 0%, #faf8f2 100%);
+}
+
+.transmission-input:focus {
+  box-shadow: inset 0 0 0 2px rgba(184, 166, 87, 0.3);
 }
 
 /* Stats Panel */
@@ -1504,14 +1660,26 @@ body {
     gap: var(--spacing-sm);
   }
 
-  .textarea {
-    min-height: 120px;
+  .transmission-input {
+    min-height: 180px;
+  }
+
+  .prompt-seeds {
+    padding: var(--spacing-md);
+  }
+
+  .prompt-seed {
+    font-size: 0.92rem;
   }
 
   .form-footer {
     flex-direction: column;
     gap: var(--spacing-sm);
-    align-items: flex-start;
+    align-items: stretch;
+  }
+
+  .form-footer .btn-primary {
+    width: 100%;
   }
 
   .completion-actions {
