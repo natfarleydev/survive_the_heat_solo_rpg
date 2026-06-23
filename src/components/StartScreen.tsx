@@ -15,10 +15,11 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
   // Splash screen lifecycle
   useEffect(() => {
     if (phase === 'splash') {
-      // Total splash duration: 5.5s (animations) + margin
+      // Total splash duration: ~18 seconds (animations) + fade out
+      // Each line gets time to be read and absorbed
       const timer = setTimeout(() => {
         setPhase('input');
-      }, 5600);
+      }, 18000);
 
       return () => clearTimeout(timer);
     }
