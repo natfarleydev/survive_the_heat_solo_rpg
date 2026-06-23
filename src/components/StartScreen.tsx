@@ -55,12 +55,6 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
             if (e.key === 'Enter' || e.key === ' ') setPhase('input');
           }}
         >
-          <div className="start-background">
-            <div className="heat-shimmer heat-shimmer-1"></div>
-            <div className="heat-shimmer heat-shimmer-2"></div>
-            <div className="heat-shimmer heat-shimmer-3"></div>
-          </div>
-
           <div className="splash-content">
             <p className="splash-line splash-line-1">
               The world burns. Temperatures soar past anything the old records predicted.
@@ -89,12 +83,6 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
       {/* INPUT SCREEN */}
       {phase === 'input' && (
         <div className="start-screen">
-          <div className="start-background">
-            <div className="heat-shimmer heat-shimmer-1"></div>
-            <div className="heat-shimmer heat-shimmer-2"></div>
-            <div className="heat-shimmer heat-shimmer-3"></div>
-          </div>
-
           <div className="start-content animate-up">
             <h1 className="start-title animate-glow">Survive the Heat</h1>
             <p className="start-hook">

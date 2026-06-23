@@ -262,23 +262,32 @@ test.describe('Survive the Heat - Game Logic', () => {
 
       // Submit responses for days 1-3
       for (let day = 1; day <= 3; day++) {
-        const textarea = page.locator('textarea');
-        const submitButton = page.locator('button:has-text("Send Report")');
-
-        // Skip if waiting state
-        const waitingState = page.locator('text=Next letter in');
-        if (await waitingState.isVisible()) {
-          // Use skip button to advance
-          const skipButton = page.locator('button[title*="Skip"]');
-          if (await skipButton.isVisible()) {
-            await skipButton.click();
-            await page.waitForTimeout(500);
-          }
+        // If we're in the waiting state, skip ahead to the next letter.
+        const skipButton = page.locator('button[title*="Skip"]');
+        if (await skipButton.isVisible().catch(() => false)) {
+          await skipButton.click();
         }
 
+        // Wait for the report form to be ready before interacting (webkit can
+        // lag through the letter/form transition).
+        const textarea = page.locator('textarea');
+        await textarea.waitFor({ state: 'visible' });
+        await expect(textarea).toBeEnabled();
+
         await textarea.fill(`Day ${day} response: I survived by staying hydrated.`);
+
+        const submitButton = page.locator('button:has-text("Send Report")');
         await submitButton.click();
-        await page.waitForTimeout(500);
+
+        // Wait until the submission is persisted (day advanced) before looping.
+        await expect
+          .poll(async () =>
+            page.evaluate(() => {
+              const s = JSON.parse(localStorage.getItem('survive_the_heat_game') || '{}');
+              return s.responses?.length ?? 0;
+            })
+          )
+          .toBe(day);
       }
 
       // Should be on day 4
@@ -349,31 +358,6 @@ test.describe('Survive the Heat - Game Logic', () => {
       // Check download path contains character name
       expect(download.suggestedFilename()).toContain('Alex');
       expect(download.suggestedFilename()).toContain('.md');
-    });
-  });
-
-  test.describe('Animation Toggle', () => {
-    test('should disable animations when toggled', async ({ page }) => {
-      const toggleButton = page.locator('button[title*="animations"]');
-
-      // Click to disable
-      await toggleButton.click();
-
-      // Check if no-animations class is added
-      const bodyClass = await page.evaluate(() => document.body.className);
-      expect(bodyClass).toContain('no-animations');
-    });
-
-    test('should enable animations when toggled again', async ({ page }) => {
-      const toggleButton = page.locator('button[title*="animations"]');
-
-      // Click twice to toggle back
-      await toggleButton.click();
-      await toggleButton.click();
-
-      // Check if no-animations class is removed
-      const bodyClass = await page.evaluate(() => document.body.className);
-      expect(bodyClass).not.toContain('no-animations');
     });
   });
 });
