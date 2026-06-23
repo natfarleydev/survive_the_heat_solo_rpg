@@ -9,7 +9,7 @@ export const letterBank: Letter[] = [
 
 This is Iris. Welcome to the network.
 
-We picked up your signal three days ago. You made it further than most do alone out there. The heat's unforgiving—we lose people every cycle who don't know the old tricks, the survival hacks. You're still standing, which means you already know something.
+We picked up your signal three days ago. You made it further than most do alone out there. The heat's unforgiving—some people slip away every cycle who don't know the old tricks, the survival hacks. You're still standing, which means you already know something.
 
 The settlement needs people like you. We're calling ourselves New Hope, holed up in an old data center complex about 200 klicks east. The servers still running keep the core cool enough to breathe. We've got about eighty souls here now. Growing.
 
@@ -30,7 +30,7 @@ Iris`,
 
 Dr. Venn here. Iris forwarded your profile.
 
-I need baseline data if you're going to be coordinating with us long-term. Heat exposure, dehydration, solar radiation stress—these hit differently in the field than in our controlled environment. Three of our outer team reported heat hallucinations yesterday. One started seeing his dead sister. Another thought the settlement walls were melting.
+I need baseline data if you're going to be coordinating with us long-term. Heat exposure, dehydration, solar radiation stress—these hit differently in the field than in our controlled environment. Three of our outer team reported heat hallucinations yesterday. One started seeing ghosts from his past. Another thought the settlement walls were melting.
 
 The body and mind degrade in predictable ways under sustained heat. I've been tracking it for seven years now. There are patterns. Tells.
 
@@ -53,7 +53,7 @@ We intercepted some old comms data from a dead settlement three sectors over. Fo
 
 Here's the thing: we can't reach it without risking people through the worst heat hours. But you're already out there. You know the terrain better than our maps do.
 
-I'm not asking you to steal it. I'm asking if you've seen it. If it's real. If we send a team, they're walking into heat that's killed better soldiers than any of us. But that cache could stretch our settlement reserves by two months, maybe more.
+I'm not asking you to steal it. I'm asking if you've seen it. If it's real. If we send a team, they're walking into heat that's faded better people than any of us. But that cache could stretch our settlement reserves by two months, maybe more.
 
 What do you know?
 
@@ -67,7 +67,7 @@ Koss`,
 
 We're tracking a thermal depression pattern moving in from the north. The models from our old weather AI (still running, believe it or not) suggest temperatures could hit 72°C within 36 hours.
 
-That's beyond the survival zone for most people. We had one other person working remote like you during the last spike. He stopped responding after day one. We found him three days later. Heat stroke doesn't leave much room for second chances.
+That's beyond the survival zone for most people. We had one other person working remote like you during the last spike. He stopped responding after day one. We found him three days later beyond the veil. There's little room for recovery from that threshold.
 
 I'm not trying to scare you. I'm trying to prepare you.
 
@@ -75,7 +75,7 @@ Here's what we know keeps people alive in those conditions: absolute water disci
 
 How are you planning to survive the next 72 hours? What's your strategy? What are you scared of?
 
-We need to know. The data matters. Even if you don't make it, we'll learn from what you tried.
+We need to know. The data matters. If the heat takes you beyond the veil, we'll learn from what you tried.
 
 Iris`,
   },
@@ -91,9 +91,9 @@ But you're out there genuinely alone. That does something different to the mind.
 
 I'm reaching out because after four days of contact, we want to make sure your isolation isn't becoming pathological. Are you sleeping? Are you tracking time normally, or are the days blurring? Do you still remember why you're fighting to survive, or has it become automatic?
 
-People surprise me. Some get stronger in isolation. Most get stranger. A few break completely. I've been reading your reports through Iris's data summaries. You seem grounded. But I'm asking you to tell me directly: how are you holding up mentally?
+People surprise me. Some get stronger in isolation. Most get stranger. A few fade beyond the veil. I've been reading your reports through Iris's data summaries. You seem grounded. But I'm asking you to tell me directly: how are you holding up mentally?
 
-The heat doesn't just kill the body.
+The heat affects more than just the body.
 
 Mara`,
   },
@@ -163,7 +163,7 @@ We've been tracking something in your responses. A shift around day seven. A dee
 
 Either way, I want to ask: do you feel like this matters? Like your survival is connected to something larger than just staying alive another day?
 
-This is important because purpose is the second most common cause of death out there. Not heat, not dehydration—loss of purpose. People can survive almost anything if they believe it's for something. They fall apart when they're just enduring.
+This is important because loss of purpose is what pulls people beyond the veil. Not heat, not dehydration—loss of purpose. People can survive almost anything if they believe it's for something. They fade when they're just enduring.
 
 You're being asked to take risks. For the cache, for our data, for the settlement. Before you do that, I need you to think about why. What does New Hope mean to you? Why is a stranger named Iris on a network asking you to help?
 
@@ -209,7 +209,7 @@ The next cycle will be the worst one—thermal models predict 75°C. It'll be th
 
 But we need data from the peak. We need to know what works when it's worst.
 
-I won't lie to you: this is dangerous. This might be where you break.
+I won't lie to you: this is dangerous. This is the edge of what you can endure.
 
 But on the other side of this, if you survive, you're coming home. To New Hope. To us. We've prepared shelter. We've allocated resources. You'll recover here. You'll be one of us, not a voice on a network.
 

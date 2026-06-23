@@ -66,7 +66,7 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
               A settlement called New Hope found your signal.
             </p>
             <p className="splash-line splash-line-4">
-              They want to hear your story—how you survive each day in conditions that kill most people.
+              They want to hear your story—how you survive each day in conditions most don't make it through.
             </p>
             <p className="splash-line splash-line-5">
               Your reports might save lives.
