@@ -978,6 +978,64 @@ body {
   color: var(--color-dark-char);
 }
 
+.morale-help {
+  font-size: 0.85rem;
+  color: var(--color-dark-sand);
+  margin-top: var(--spacing-sm);
+  text-align: center;
+  font-style: italic;
+}
+
+.stats-details {
+  margin-top: var(--spacing-lg);
+  cursor: pointer;
+}
+
+.stats-details summary {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-dust-light);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--color-dark-char);
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.stats-details summary:hover {
+  background: var(--color-dust-dark);
+  color: white;
+}
+
+.detailed-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-dust-light);
+  border-radius: 4px;
+}
+
+.detailed-stats .stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm);
+  border-radius: 4px;
+  background: white;
+  border: 1px solid var(--color-border);
+}
+
+.detailed-stats .stat-label {
+  font-size: 0.9rem;
+}
+
+.detailed-stats .stat-value {
+  font-weight: bold;
+  color: var(--color-accent-hope);
+}
+
 /* History Panel */
 .history-overlay {
   position: fixed;
