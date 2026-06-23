@@ -72,6 +72,7 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
               Your reports might save lives.
             </p>
           </div>
+          <div className="splash-progress"></div>
         </div>
       )}
 

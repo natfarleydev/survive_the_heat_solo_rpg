@@ -386,6 +386,33 @@ body {
   animation-delay: 13.5s;
 }
 
+.splash-progress {
+  position: absolute;
+  bottom: var(--spacing-lg);
+  left: var(--spacing-lg);
+  right: var(--spacing-lg);
+  height: 2px;
+  background: rgba(184, 166, 87, 0.2);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.splash-progress::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-hope), transparent);
+  animation: progress 18s ease-in forwards;
+  animation-play-state: var(--animation-play, running);
+}
+
+@keyframes progress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
 /* Start Screen - Fancy Version */
 .start-screen {
   position: relative;
@@ -1426,17 +1453,43 @@ body {
   }
 
   .game-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+
+  .game-title {
+    font-size: 1.1rem;
+  }
+
+  .header-content {
+    flex: 1;
+  }
+
+  .character-name {
+    font-size: 0.9rem;
+  }
+
+  .day-counter {
+    font-size: 0.85rem;
   }
 
   .header-actions {
-    align-self: flex-start;
+    display: flex;
+    gap: 0.3rem;
+    order: 3;
   }
 
-  .character-info {
-    flex-direction: column;
-    gap: var(--spacing-sm);
+  .icon-label {
+    display: none !important;
+  }
+
+  .btn-icon {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 1rem;
+    min-width: 40px;
+    min-height: 40px;
   }
 
   .stat-group {
@@ -1516,5 +1569,29 @@ body {
 
   .stat-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ACCESSIBILITY: Focus states for keyboard navigation */
+.btn:focus-visible,
+.btn-icon:focus-visible,
+.input:focus-visible,
+.textarea:focus-visible,
+button[type="submit"]:focus-visible {
+  outline: 3px solid var(--color-accent-hope);
+  outline-offset: 2px;
+}
+
+.input-hero:focus-visible {
+  outline: 3px solid var(--color-accent-hope);
+  outline-offset: 2px;
+}
+
+/* ACCESSIBILITY: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
