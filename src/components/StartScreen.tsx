@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface StartScreenProps {
   onStartGame: (characterName: string) => void;
@@ -7,6 +7,13 @@ interface StartScreenProps {
 export default function StartScreen({ onStartGame }: StartScreenProps) {
   const [characterName, setCharacterName] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [showFullText, setShowFullText] = useState(false);
+
+  useEffect(() => {
+    // After a short delay, show the full text (reveal gradually)
+    const timer = setTimeout(() => setShowFullText(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,54 +24,63 @@ export default function StartScreen({ onStartGame }: StartScreenProps) {
   };
 
   return (
-    <div className="container">
+    <div className="container start-container">
       <div className="start-screen">
-        <h1 className="title">Survive the Heat</h1>
-        <div className="subtitle">A Solo RPG in a Burning Future</div>
-
-        <div className="intro-text">
-          <p>
-            The world burns. Temperatures soar past anything the old records predicted. But you're
-            still alive.
-          </p>
-          <p>
-            A settlement called New Hope found your signal. They want to hear your story—how you
-            survive each day in conditions that kill most people. Your reports might save lives.
-          </p>
-          <p className="emphasis">
-            Over the next 12 days, you'll receive letters from the settlement. Each day, you'll
-            respond with how you survived the heat. Your choices shape the story.
-          </p>
-          <p className="small">
-            Expect to spend about 5-10 minutes per day. Come back every 8 hours for the next
-            letter.
-          </p>
+        {/* Animated background elements */}
+        <div className="start-background">
+          <div className="heat-shimmer heat-shimmer-1"></div>
+          <div className="heat-shimmer heat-shimmer-2"></div>
+          <div className="heat-shimmer heat-shimmer-3"></div>
         </div>
 
-        <form onSubmit={handleSubmit} className="character-form">
-          <label htmlFor="character-name" className="label">
-            What's your name? <span className="required">*</span>
-          </label>
-          <input
-            id="character-name"
-            type="text"
-            value={characterName}
-            onChange={(e) => setCharacterName(e.target.value)}
-            placeholder="Enter your character's name"
-            className="input"
-            autoFocus
-            disabled={submitted}
-          />
-          <button type="submit" className="btn btn-primary" disabled={!characterName.trim() || submitted}>
-            {submitted ? 'Starting...' : 'Begin Your Journey'}
-          </button>
-        </form>
-
-        <div className="footer-text">
-          <p>
-            <strong>Content Warning:</strong> This game explores heat stress, isolation, and difficult
-            survival scenarios. It's designed to be reflective, not traumatizing.
+        {/* Main content - minimal and focused */}
+        <div className="start-content animate-up">
+          <h1 className="start-title animate-glow">Survive the Heat</h1>
+          <p className="start-hook">
+            You're alive. New Hope found your signal.
+            <br />
+            <em>They want to hear your story.</em>
           </p>
+
+          {/* Character name input - VERY PROMINENT */}
+          <form onSubmit={handleSubmit} className="character-form-minimal">
+            <input
+              id="character-name"
+              type="text"
+              value={characterName}
+              onChange={(e) => setCharacterName(e.target.value)}
+              placeholder="Your name..."
+              className="input-hero animate-in"
+              autoFocus
+              disabled={submitted}
+              maxLength={30}
+            />
+            <button
+              type="submit"
+              className="btn btn-hero"
+              disabled={!characterName.trim() || submitted}
+            >
+              {submitted ? '→ Beginning...' : '→ Begin'}
+            </button>
+          </form>
+
+          {/* Additional context - revealed after input is visible */}
+          {showFullText && (
+            <div className="start-context animate-in">
+              <p className="context-text">
+                Over 12 days, you'll receive letters and share how you survived. Each response
+                shapes what comes next.
+              </p>
+              <div className="context-meta">
+                <span>📅 5–10 min/day</span>
+                <span>💬 8-hour delays</span>
+                <span>💾 Auto-saves locally</span>
+              </div>
+              <p className="context-warning">
+                ⚠️ Themes: heat stress, isolation, survival decisions
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

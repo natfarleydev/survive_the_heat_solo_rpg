@@ -12,6 +12,7 @@ import {
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import CompletionScreen from './components/CompletionScreen';
+import AnimationToggle from './components/AnimationToggle';
 import './App.css';
 
 function App() {
@@ -52,32 +53,48 @@ function App() {
 
   if (loading) {
     return (
-      <div className="container">
-        <div className="loading">Loading...</div>
-      </div>
+      <>
+        <AnimationToggle />
+        <div className="container">
+          <div className="loading">Loading...</div>
+        </div>
+      </>
     );
   }
 
   if (!gameState) {
-    return <StartScreen onStartGame={handleStartGame} />;
+    return (
+      <>
+        <AnimationToggle />
+        <StartScreen onStartGame={handleStartGame} />
+      </>
+    );
   }
 
   if (gameState.gameCompleted) {
-    return <CompletionScreen gameState={gameState} onReset={handleReset} />;
+    return (
+      <>
+        <AnimationToggle />
+        <CompletionScreen gameState={gameState} onReset={handleReset} />
+      </>
+    );
   }
 
   const currentLetter = getCurrentLetter(gameState);
   const letterReady = isLetterReady(gameState);
 
   return (
-    <GameScreen
-      gameState={gameState}
-      currentLetter={currentLetter}
-      letterReady={letterReady}
-      formattedTime={formatTimeRemaining(timeRemaining)}
-      onGameStateChange={setGameState}
-      onReset={handleReset}
-    />
+    <>
+      <AnimationToggle />
+      <GameScreen
+        gameState={gameState}
+        currentLetter={currentLetter}
+        letterReady={letterReady}
+        formattedTime={formatTimeRemaining(timeRemaining)}
+        onGameStateChange={setGameState}
+        onReset={handleReset}
+      />
+    </>
   );
 }
 
